@@ -11,15 +11,43 @@
 				const xmlDoc = xml.responseXML;
 				const x = xmlDoc.getElementsByTagName("eessprecio");
 				let table="<tr><th>Latitud</th><th>Longitud</th></tr>";
-				console.log(x.length);//DEBUG
+				
+				//console.log(x.length);//DEBUG
+				const latitudes = [];
+				const longitudes = [];
+				const distancias = [];
+				const latitud = document.getElementById('latitud').input_latitud.value;
+				const longitud = document.getElementById('longitud').input_longitud.value;
+				let limite = 5;//distancia limite para definir los mas cercanos
+
 				for (let i = 0; i <x.length; i++) {
+					latitudes[i] = x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue;
+					longitudes[i] = x[i].getElementsByTagName("longitud_x0020__x0028_wgs84_x0029_")[0].childNodes[0].nodeValue;
+				}
+				
+				for(let i=0; i<longitudes.length; i++){
+					distancias[i] = Math.sqrt(Math.pow(latitudes[i] - latitud, 2) + Math.pow(longitudes[i] - longitud, 2));
+					//console.log(distancias[i])
+				}
+				distancias.sort();
+				for(let i=0; i<distancias.length; i++){
+					//console.log("i="+i+" distancias[i]="distancias[i]);
+					if (distancias[i] > limite){
+						distancias.splice(i);
+						//console.log("borrado");
+						break;
+					}
+					//console.log(distancias[i])
+				}
+				
+				for (let i = 0; i <distancias.length; i++) {
 					table += "<tr><td>" +
 					x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue +
 					"</td><td>" +
 					x[i].getElementsByTagName("longitud_x0020__x0028_wgs84_x0029_")[0].childNodes[0].nodeValue +
 					"</td></tr>";
 				}
-				document.getElementById("resultado").innerHTML = table;
+				document.getElementById("tabla_resultado").innerHTML = table;
 			}
 			
 			function geolocalizar(){
@@ -50,6 +78,7 @@
 		</div>
 		
 		<div id="resultado">
+			<table id="tabla_resultado"></table>
 		</div>
 	</body>
 </html>
