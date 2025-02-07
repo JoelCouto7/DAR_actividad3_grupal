@@ -18,7 +18,7 @@
 				const distancias = [];
 				const latitud = document.getElementById('latitud').value;
 				const longitud = document.getElementById('longitud').value;
-				let limite = 5;//distancia limite para definir los mas cercanos
+				let limite = 2;//distancia limite para definir los mas cercanos
 
 				for (let i = 0; i <x.length; i++) {
 					latitudes[i] = x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue;
@@ -27,7 +27,7 @@
 				
 				for(let i=0; i<longitudes.length; i++){
 					distancias[i] = Math.sqrt(Math.pow(latitudes[i] - latitud, 2) + Math.pow(longitudes[i] - longitud, 2));
-					//console.log(distancias[i])
+					console.log(distancias[i])
 				}
 				distancias.sort();
 				for(let i=0; i<distancias.length; i++){
