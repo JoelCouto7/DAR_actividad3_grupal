@@ -54,7 +54,7 @@ En la aplicación web a desarrollar:
 			}
 			function myFunction(xml) {
 				const xmlDoc = xml.responseXML;
-				const x = xmlDoc.getElementsByTagName("CD");
+				const x = xmlDoc.getElementsByTagName("listaeessprecio");
 				let table="<tr><th>Latitud</th><th>Longitud</th></tr>";
 				console.log(x.length);//DEBUG
 				for (let i = 0; i <x.length; i++) {
