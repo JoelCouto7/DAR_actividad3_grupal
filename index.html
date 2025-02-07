@@ -56,6 +56,7 @@ En la aplicación web a desarrollar:
 				const xmlDoc = xml.responseXML;
 				const x = xmlDoc.getElementsByTagName("CD");
 				let table="<tr><th>Latitud</th><th>Longitud</th></tr>";
+				console.log(x.length);//DEBUG
 				for (let i = 0; i <x.length; i++) {
 					table += "<tr><td>" +
 					x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue +
@@ -65,14 +66,31 @@ En la aplicación web a desarrollar:
 				}
 				document.getElementById("resultado").innerHTML = table;
 			}
+			
+			function geolocalizar(){
+				const input_latitud = document.getElementById('latitud');
+				const input_longitud = document.getElementById('longitud');
+				
+				fetch('http://ip-api.com/json/?fields=61439')
+					.then((res) => res.json())
+					.then((res) => {
+						//console.log(res)
+						input_latitud.value = res.lat;
+						input_longitud.value = res.lon;
+					})
+					.catch(error => {
+						console.error(error);
+					});
+			}
 		</script>
 	</head>
-	<body>
+	<body onload="geolocalizar()">
 		<div id="busqueda">
+			<p>Aclaración: Por defecto, los campos se rellenan con las coordenadas del cliente obtenidas por su ip.</p>
 			<label>Latitud:</label><br>
-			<input type="text" id="latitud" name="latitud" value="39,211417"><br>
+			<input type="text" id="latitud" name="latitud" value="0"><br>
 			<label>Longitud:</label><br>
-			<input type="text" id="longitud" name="longitud" value="-1,539167"><br><br>
+			<input type="text" id="longitud" name="longitud" value="0"><br><br>
 			<button onclick=loadDoc()>Buscar</button>
 		</div>
 		
