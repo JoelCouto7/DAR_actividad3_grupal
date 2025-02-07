@@ -1,0 +1,82 @@
+<?--
+obtener las gasolineras más cercanas a su posición, dejando abierta la posibilidad a poder filtrar por determinadas empresas suministradoras o por un tipo de carburante concreto. 
+
+En la aplicación web a desarrollar:
+ - se obtendrán estos datos en formato JSON o XML y se procesarán para ofrecer al usuario una serie de informaciones
+ - cuál es la gasolinera más cercana a su posición o en una determinada ruta a seguir
+ - cuál es la más barata en un ratio de kilómetros dado
+ - si dicha gasolinera se encuentra abierta en el momento de llegar y si se ha realizado algún filtrado por empresa;
+ - se podrán excluir una serie de marcas o crear una lista blanca reducida a una serie de empresas únicamente (por ejemplo, solo las que posean tarjeta de fidelidad).
+--?>
+
+<?--
+"latitud": "39,211417",
+"c.p.": "02250",
+"dirección": "AVENIDA CASTILLA LA MANCHA, 26",
+"horario": "L-D: 07:00-22:00",
+"municipio": "Abengibre",
+"localidad": "ABENGIBRE",
+"longitud_x0020__x0028_wgs84_x0029_": "-1,539167",
+"precio_x0020_biodiesel": {"precio_x0020_bioetanol": {"precio_x0020_gas_x0020_natural_x0020_comprimido": {"precio_x0020_gas_x0020_natural_x0020_licuado": {"precio_x0020_gases_x0020_licuados_x0020_del_x0020_petróleo": {
+	"precio_x0020_gasoleo_x0020_b": "0,999",
+	"precio_x0020_gasoleo_x0020_a": "1,459",
+	"precio_x0020_gasoleo_x0020_premium": {"precio_x0020_gasolina_x0020_95_x0020_e10": {
+		"precio_x0020_gasolina_x0020_95_x0020_e5": "1,499",
+		"precio_x0020_gasolina_x0020_95_x0020_e5_x0020_premium": {"precio_x0020_gasolina_x0020_98_x0020_e10": {"precio_x0020_gasolina_x0020_98_x0020_e5": {"precio_x0020_hidrogeno": {
+			"tipo_x0020_venta": "P",
+			"ideess": 4375,
+			"idccaa": "07",
+			"remisión": "dm",
+			"rótulo": "Nº 10.935",
+			"idmunicipio": 52,
+			"provincia": "ALBACETE",
+			"idprovincia": "02",
+			"content": [
+				"<_x0025__x0020_BioEtanol>0,0",
+				"<_x0025__x0020_Éster_x0020_metílico>0,0"
+			]
+		}}}}
+	}}
+}}}}},
+"margen": "D"
+--?>
+
+
+
+<html>
+	<head>
+		<script>
+			function loadDoc() {
+				const xhttp = new XMLHttpRequest();
+				xhttp.onload = function() {myFunction(this);}
+				xhttp.open("GET", "EstacionesDeServicio.xml");
+				xhttp.send();
+			}
+			function myFunction(xml) {
+				const xmlDoc = xml.responseXML;
+				const x = xmlDoc.getElementsByTagName("CD");
+				let table="<tr><th>Latitud</th><th>Longitud</th></tr>";
+				for (let i = 0; i <x.length; i++) {
+					table += "<tr><td>" +
+					x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("longitud_x0020__x0028_wgs84_x0029_")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+				}
+				document.getElementById("resultado").innerHTML = table;
+			}
+		</script>
+	</head>
+	<body>
+		<div id="busqueda">
+			<label>Latitud:</label><br>
+			<input type="text" id="latitud" name="latitud" value="39,211417"><br>
+			<label>Longitud:</label><br>
+			<input type="text" id="longitud" name="longitud" value="-1,539167"><br><br>
+			<button onclick=loadDoc()>Buscar</button>
+		</div>
+		
+		<div id="resultado">
+		</div>
+	</body>
+</html>
