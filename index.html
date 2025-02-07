@@ -71,12 +71,12 @@ En la aplicación web a desarrollar:
 				const input_latitud = document.getElementById('latitud');
 				const input_longitud = document.getElementById('longitud');
 				
-				fetch('http://ip-api.com/json/?fields=61439')
-					.then((res) => res.json())
-					.then((res) => {
-						//console.log(res)
-						input_latitud.value = res.lat;
-						input_longitud.value = res.lon;
+				fetch('https://ipapi.co/json/')
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data)
+						input_latitud.value = data.latitude;
+						input_longitud.value = data.longitude;
 					})
 					.catch(error => {
 						console.error(error);
