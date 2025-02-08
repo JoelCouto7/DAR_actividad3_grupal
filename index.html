@@ -4,7 +4,9 @@
 			function loadDoc() {
 				const xhttp = new XMLHttpRequest();
 				xhttp.onload = function() {myFunction(this);}
-				xhttp.open("GET", "EstacionesDeServicio.xml");
+				//xhttp.open("GET", "EstacionesDeServicio.xml");
+				//https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
+				xhttp.open("GET", "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/");
 				xhttp.send();
 			}
 			function myFunction(xml) {
