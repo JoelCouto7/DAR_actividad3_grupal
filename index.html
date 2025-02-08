@@ -12,7 +12,10 @@
     				*/
 				fetch("https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/")
 					.then(response => response.json())
-                			.then(data => myFunction(data));
+                			.then(data => {
+						console.log(data)
+						myFunction(data)
+					});
 			}
 			function myFunction(xml) {
 				const xmlDoc = xml.responseXML;
