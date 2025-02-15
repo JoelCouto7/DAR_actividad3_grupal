@@ -1,94 +1,13 @@
-<html>
-	<head>
-		<script>
-			function loadDoc() {
-				/*
-				const xhttp = new XMLHttpRequest();
-				xhttp.onload = function() {myFunction(this);}
-				//xhttp.open("GET", "EstacionesDeServicio.xml");
-				//https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
-				xhttp.open("GET", "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/");
-				xhttp.send();
-    				*/
-				fetch("https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/")
-					.then(response => response.json())
-                			.then(data => {
-						console.log(data)
-						myFunction(data)
-					});
-			}
-			function myFunction(xml) {
-				const xmlDoc = xml.responseXML;
-				const x = xmlDoc.getElementsByTagName("eessprecio");
-				let table="<tr><th>Latitud</th><th>Longitud</th></tr>";
-				
-				//console.log(x.length);//DEBUG
-				const latitudes = [];
-				const longitudes = [];
-				const distancias = [];
-				const latitud = document.getElementById('latitud').value;
-				const longitud = document.getElementById('longitud').value;
-				let limite = 2;//distancia limite para definir los mas cercanos
-
-				for (let i = 0; i <x.length; i++) {
-					latitudes[i] = x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue;
-					longitudes[i] = x[i].getElementsByTagName("longitud_x0020__x0028_wgs84_x0029_")[0].childNodes[0].nodeValue;
-				}
-				
-				for(let i=0; i<longitudes.length; i++){
-					distancias[i] = Math.sqrt(Math.pow(latitudes[i] - latitud, 2) + Math.pow(longitudes[i] - longitud, 2));
-					console.log(distancias[i])
-				}
-				distancias.sort();
-				for(let i=0; i<distancias.length; i++){
-					//console.log("i="+i+" distancias[i]="distancias[i]);
-					if (distancias[i] > limite){
-						distancias.splice(i);
-						//console.log("borrado");
-						break;
-					}
-					//console.log(distancias[i])
-				}
-				
-				for (let i = 0; i <distancias.length; i++) {
-					table += "<tr><td>" +
-					x[i].getElementsByTagName("latitud")[0].childNodes[0].nodeValue +
-					"</td><td>" +
-					x[i].getElementsByTagName("longitud_x0020__x0028_wgs84_x0029_")[0].childNodes[0].nodeValue +
-					"</td></tr>";
-				}
-				document.getElementById("tabla_resultado").innerHTML = table;
-			}
-			
-			function geolocalizar(){
-				const input_latitud = document.getElementById('latitud');
-				const input_longitud = document.getElementById('longitud');
-				
-				fetch('https://ipapi.co/json/')
-					.then((response) => response.json())
-					.then((data) => {
-						console.log(data)
-						input_latitud.value = data.latitude;
-						input_longitud.value = data.longitude;
-					})
-					.catch(error => {
-						console.error(error);
-					});
-			}
-		</script>
-	</head>
-	<body onload="geolocalizar()">
-		<div id="busqueda">
-			<p>Aclaración: Por defecto, los campos se rellenan con las coordenadas del cliente obtenidas por su ip.</p>
-			<label>Latitud:</label><br>
-			<input type="text" id="latitud" name="latitud" value="0"><br>
-			<label>Longitud:</label><br>
-			<input type="text" id="longitud" name="longitud" value="0"><br><br>
-			<button onclick=loadDoc()>Buscar</button>
-		</div>
-		
-		<div id="resultado">
-			<table id="tabla_resultado"></table>
-		</div>
-	</body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Gasolinera</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
 </html>
