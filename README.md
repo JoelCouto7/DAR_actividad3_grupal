@@ -7,4 +7,4 @@ Grupo 6:
  - Sara Benito Pinel
  - Santiago Joel Couto Pérez
 
-Este trabajo no funciona en GitHub pages, de modo que debe ser descargado y ejecutado en local.
+Enlace a la aplicación: https://elowar27.github.io/Gasolinera/
